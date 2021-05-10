@@ -1,0 +1,11 @@
+$outline-color: #d84d23;
+$border-color: #1d1d1d;
+$background-color: #eceff1;
+
+
+
+@mixin button-box {
+    height: 50px;
+    width: 50px;
+    font-size: 150%;
+}
