@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'webshopdb',
-        'HOST': '127.0.0.1',
+        'HOST': 'db',
         'PORT': '3306',
         'USER': 'root',
         'PASSWORD': 'root',
@@ -127,6 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets', 'static')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'assets', 'media')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
