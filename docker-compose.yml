@@ -11,7 +11,9 @@ services:
        MYSQL_ROOT_PASSWORD: 'root'
   web:
     build: .
-    command: python manage.py runserver 0.0.0.0:8000
+    image: migra
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    restart: unless-stopped
     volumes:
       - .:/webshop
     ports:
