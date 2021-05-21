@@ -21,6 +21,9 @@ header {
       margin: 0;
       padding: 10px;
       li {
+        display: flex;
+        text-align: center;
+        justify-content: center;
         float: left;
         overflow: hidden;
         form {
@@ -64,8 +67,9 @@ header {
           }
         }
         a {
-          display: block;
+          display: flex;
           text-align: center;
+          justify-content: center;
           text-decoration: none;
           color: black;
           font-size: 18px;
@@ -78,7 +82,7 @@ header {
           cursor: pointer;
           i {
             &:hover {
-              color: black;
+              color: $outline-color
             }
           }
         }

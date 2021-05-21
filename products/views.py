@@ -8,3 +8,9 @@ from .models import Product
 class ProductPageView(generic.DetailView):
     model = Product
     template_name = 'products/product_page.html'
+    
+    '''
+    product=Product.objects.get(id=id)
+    def post(self, request):
+        pass
+    '''

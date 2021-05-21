@@ -28,6 +28,13 @@ header ul {
 }
 
 header ul li {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   float: left;
   overflow: hidden;
 }
@@ -62,7 +69,7 @@ header ul li form button[type=submit] {
   font-size: 150%;
   font-size: 140%;
   cursor: pointer;
-  background-color: #d84d23;
+  background-color: #3067e9;
   margin-left: 0;
   border-radius: 0 5px 5px 0;
 }
@@ -84,8 +91,13 @@ header ul li form select:focus {
 }
 
 header ul li a {
-  display: block;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
   text-align: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   text-decoration: none;
   color: black;
   font-size: 18px;
@@ -102,6 +114,6 @@ header ul li button {
 }
 
 header ul li button i:hover {
-  color: black;
+  color: #3067e9;
 }
 /*# sourceMappingURL=base_style.css.map */
