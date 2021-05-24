@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.urls import reverse
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 class Product(models.Model):
@@ -27,4 +28,6 @@ class Product(models.Model):
         buyer.money_spent += float(price)
         buyer.save()
 
+    def get_absolute_url(self):
+        return reverse("product-details", kwargs={"pk": self.pk})
 

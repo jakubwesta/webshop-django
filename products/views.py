@@ -9,8 +9,19 @@ class ProductPageView(generic.DetailView):
     model = Product
     template_name = 'products/product_page.html'
     
-    '''
-    product=Product.objects.get(id=id)
-    def post(self, request):
-        pass
-    '''
+    def get_object(self):
+        print("Product primary key: " + str(self.kwargs['pk']))
+        try:
+            obj = Product.objects.get(pk=self.kwargs['pk'])
+        except:
+            obj = None
+        return obj
+
+class ProductListView(generic.ListView):
+    model = Product
+    context_object_name = 'product_list'
+    template_name = 'products/products_list_page.html'
+    
+    def get_queryset(self):
+        queryset = Product.objects.all()[:10]
+        return queryset
