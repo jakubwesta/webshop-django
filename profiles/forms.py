@@ -1,18 +1,35 @@
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
+from django.http import HttpResponse
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+from django.urls.base import reverse
+from django import forms
 
 from .models import User
 
 
-class UserCreationForm(UserCreationForm):
-
+class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ('email', 'username', 'first_name', 'last_name')
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Register'))
 
-
-class UserChangeForm(UserChangeForm):
-
+class UserLoginForm(AuthenticationForm):
     class Meta:
         model = User
-        fields = ('email',)
+        fields = ('email')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Login'))
+        
+
+
 

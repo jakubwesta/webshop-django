@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% load static %}
+
 {% block head %}
 <link rel="stylesheet" type="text/css" href="{% static 'products/css/product_page/product_page_style.css' %}"> 
 {% endblock head %}  
@@ -9,6 +11,4 @@
     <p>{{ object.name }}</p>
     <p>{{ object.buy_now }}</p>
     <p>{{ object.auction_starting_price }}</p>
-
-    TEST
 {% endblock body %}

@@ -38,11 +38,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'products.apps.ProductsConfig',
     'profiles.apps.ProfilesConfig',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 AUTH_USER_MODEL = 'profiles.User'
+
+LOGIN_URL = '/user/login/'
+LOGOUT_URL = '/user/logout/'
+LOGIN_REDIRECT_URL = '/user/'
+LOGOUT_REDIRECT_URL = '/user/login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -3,7 +3,8 @@ from django.urls import include
 from . import views
   
 urlpatterns = [
-    path('user/<int:pk>/', views.UserHomeDetailsPageView.as_view()),
-    path('accounts/', include('django.contrib.auth.urls')),
-    path('user/login/', views.LoginPageView.as_view()),
+    path('user/register/', views.UserRegistrationView.as_view(), name='register'),
+    path('user/login/', views.UserLoginView.as_view(), name='login'),
+    path('user/logout/', views.UserLogoutView.as_view(), name='logout'),
+    path('user/', views.UserHomeDashobardPageView.as_view(), name='user dashboard home'),
 ]

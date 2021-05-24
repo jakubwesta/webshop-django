@@ -28,7 +28,7 @@ To build this project I used following framowrks:
 * Boostrap
 * JQuery
 
-I also used *MySql* database and *SCSS* preprocessor. For the virtual environment *pipenv*.
+I also used *MySql* database and *SCSS* preprocessor. For the virtual environment I have chosen *pipenv*. To make forms making I used *django crispy forms*.
 
 ### **Installation**
 
