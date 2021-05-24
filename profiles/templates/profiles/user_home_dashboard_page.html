@@ -9,6 +9,9 @@ Hello, {{ user.username|default:'Guest' }}!
     {% if user.is_authenticated %}
         <br>
         <a href="{% url 'home' %}">Browse Products</a>
+        <br>
+        <a href="{% url 'create-product' %}">Create new product</a>
+        <br>
         <a href="{% url 'logout' %}">Logout</a>
     {% else %}
         <a href="{% url 'login' %}">Login</a>

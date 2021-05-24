@@ -12,6 +12,7 @@ class Product(models.Model):
         (5, 'Very good')
     ]
     name = models.CharField(max_length=70, blank=False)
+    description = models.CharField(max_length=5000, blank=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
     buy_now = models.DecimalField(decimal_places=2, max_digits=8, blank=False)
     auction_starting_price = models.DecimalField(decimal_places=2, max_digits=8, blank=True)

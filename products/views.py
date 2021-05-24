@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Product
 
-class ProductPageView(generic.DetailView):
+class ProductDetailsView(generic.DetailView):
     model = Product
     template_name = 'products/product_page.html'
     

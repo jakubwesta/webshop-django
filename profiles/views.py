@@ -1,3 +1,5 @@
+from django.urls.base import resolve
+from products.models import Product
 from django.shortcuts import get_object_or_404, resolve_url
 from django.views import generic
 from django.contrib.auth import views
@@ -8,18 +10,6 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from webshop import settings
 
-
-class UserHomeDashobardPageView(generic.DetailView):
-    model = User
-    template_name = 'profiles/user_home_dashboard_page.html'
-
-    def get_object(self):
-        print("User primary key: " + str(self.request.user.pk))
-        try:
-            obj = User.objects.get(pk=self.request.user.pk)
-        except:
-            obj = None
-        return obj
 
 class UserRegistrationView(generic.CreateView):
     model = User
@@ -41,3 +31,22 @@ class UserLogoutView(views.LogoutView):
     model = User
     next_page = settings.LOGOUT_REDIRECT_URL
 
+class UserProductCreateView(generic.CreateView):
+    model = Product
+    template_name = 'profiles/user_product_create_page.html'
+    form_class = ProductCreationForm
+
+    def get_success_url(self):
+        return resolve_url('/user')
+
+class UserHomeDashobardView(generic.DetailView):
+    model = User
+    template_name = 'profiles/user_home_dashboard_page.html'
+
+    def get_object(self):
+        print("User primary key: " + str(self.request.user.pk))
+        try:
+            obj = User.objects.get(pk=self.request.user.pk)
+        except:
+            obj = None
+        return obj
