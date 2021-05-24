@@ -8,7 +8,8 @@
 
 {% block body %}
     <p>RJYTRMFTGY</p>
-    <p>{{ object.name }}</p>
-    <p>{{ object.buy_now }}</p>
-    <p>{{ object.auction_starting_price }}</p>
+    <p>{{ product.name }}</p>
+    <p>{{ product.buy_now }}</p>
+    <p>{{ product.auction_starting_price }}</p>
+    <p>Author: {{ product.author.username }}</p>
 {% endblock body %}

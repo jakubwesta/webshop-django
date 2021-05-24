@@ -1,5 +1,6 @@
 from django.urls.base import resolve
 from products.models import Product
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, resolve_url
 from django.views import generic
 from django.contrib.auth import views
@@ -27,11 +28,11 @@ class UserLoginView(views.LoginView):
     def get_success_url(self):
         return resolve_url('/user')
 
-class UserLogoutView(views.LogoutView):
+class UserLogoutView(LoginRequiredMixin, views.LogoutView):
     model = User
     next_page = settings.LOGOUT_REDIRECT_URL
 
-class UserProductCreateView(generic.CreateView):
+class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product
     template_name = 'profiles/user_product_create_page.html'
     form_class = ProductCreationForm
@@ -39,7 +40,11 @@ class UserProductCreateView(generic.CreateView):
     def get_success_url(self):
         return resolve_url('/user')
 
-class UserHomeDashobardView(generic.DetailView):
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+class UserHomeDashobardView(LoginRequiredMixin, generic.DetailView):
     model = User
     template_name = 'profiles/user_home_dashboard_page.html'
 
