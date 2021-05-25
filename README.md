@@ -1,11 +1,13 @@
 # **Webshop**
 
-- [**Webshop**](#webshop)
-  - [**General info**](#general-info)
-    - [**Buit with**](#buit-with)
-    - [**Installation**](#installation)
-  - [**Usage**](#usage)
-    - [**Important commands**](#important-commands)
+## **Content**
+- [**General info**](#general-info)
+  - [**Technologies**](#technologies)
+  - [**Installation**](#installation)
+- [**Usage**](#usage)
+  - [**How can you quickly test it out**](#how-can-you-quickly-test-it-out)
+  - [**Important commands**](#important-commands)
+  - [**User roles**](#user-roles)
 
 
 ## **General info**
@@ -23,13 +25,13 @@ This project is an example of a webshop made with django with connection to MySq
 * Product and user rating
 * And few more...
 
-### **Buit with**
+### **Technologies**
 To build this project I used following framowrks:
 * Django
+* MySql Database
+* HTML5, CSS/SCSS, Javascript
 * Boostrap
 * JQuery
-
-I also used *MySql* database and *SCSS* preprocessor. For the virtual environment I have chosen *pipenv*. To make forms making I used *django crispy forms*.
 
 ### **Installation**
 
@@ -65,7 +67,15 @@ After you are see that server is working, register your new account and check ou
 
 If you want to make multiple things at once, run those commands:
 
+### **How can you quickly test it out**
+
 ### **Important commands**
 * `py manage.py createuser <amount>` -> Create user(s), it'll return each user email and password.
 * `py manage.py createproduct <amount>` -> This will create user (seller) of the product(s), and than create given amount of random items.
 
+### **User roles**
+* Guest: wip
+* User: wip
+* Certified User: wip
+* Staff: wip
+* Admin: wip

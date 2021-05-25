@@ -1,6 +1,5 @@
 from django.db import models
 from django.urls import reverse
-from django.core.validators import MinValueValidator, MaxValueValidator
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from webshop import settings
@@ -15,7 +14,7 @@ class Product(models.Model):
     buy_now = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
     auction_starting_price = models.DecimalField(decimal_places=2, max_digits=10, blank=True)
 
-    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='seller_user')
+    seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
  
     publicly_listed = models.BooleanField(default=True)
     creation_date = models.DateTimeField(auto_now_add=True)
@@ -24,9 +23,4 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("product-details", kwargs={"pk": self.pk})
 
-    def buy(self, buyer, amount, price):
-        self.amount -= int(amount)
-        self.save()
-        buyer.money_spent += float(price)
-        buyer.save()
-
+        

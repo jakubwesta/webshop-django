@@ -11,6 +11,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from .managers import UserManager
 from products.models import Product
+from purchases.models import Purchase
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -27,7 +28,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     admin = models.BooleanField(default=False)
 
     money_spent = models.DecimalField(decimal_places=2, max_digits=9, default = 0.00)
-    bought_products = models.ManyToManyField(Product)
+    bought_products = models.ManyToManyField(Product, through=Purchase)
 
     def __str__(self):
         return str(self.username)
