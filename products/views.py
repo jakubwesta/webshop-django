@@ -21,7 +21,15 @@ class ProductListView(generic.ListView):
     model = Product
     context_object_name = 'product_list'
     template_name = 'products/products_list_page.html'
+
+    def get_ordering(self):
+        if self.request.GET.get('ordering'):
+            ordering = str(self.request.GET['ordering'])
+        else:
+            ordering = '-creation_date'
+        return ordering
     
     def get_queryset(self):
-        queryset = Product.objects.all()[:10]
+        queryset = Product.objects.all()
+        queryset = queryset.order_by(self.get_ordering())
         return queryset

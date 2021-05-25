@@ -46,6 +46,3 @@ class ProductCreationForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', 'Create product'))
 
-
-
-

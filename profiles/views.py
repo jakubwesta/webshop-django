@@ -43,7 +43,7 @@ class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
         return resolve_url('/user')
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.seller = self.request.user
         return super().form_valid(form)
 
 class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
@@ -70,6 +70,6 @@ class UserDashboardProductsView(LoginRequiredMixin, generic.ListView):
         return ordering
 
     def get_queryset(self):
-        queryset = Product.objects.filter(author=self.request.user)
+        queryset = Product.objects.filter(seller=self.request.user)
         queryset = queryset.order_by(self.get_ordering())
         return queryset

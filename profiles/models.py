@@ -23,13 +23,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     date_joined = models.DateTimeField(default=timezone.now)
-    is_active = models.BooleanField(_('active'), default=True)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)
 
     money_spent = models.DecimalField(decimal_places=2, max_digits=9, default = 0.00)
     bought_products = models.ManyToManyField(Product)
 
+    def __str__(self):
+        return str(self.username)
     
     @property
     def is_staff(self):
