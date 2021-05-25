@@ -22,6 +22,9 @@ class Product(models.Model):
     customers_review = models.DecimalField(validators=[MinValueValidator(1), MaxValueValidator(5)], decimal_places=2, max_digits=3, null=True)
     customers_rating = models.IntegerField(choices=AVAIBLE_STARS, default=5)
     publicly_listed = models.BooleanField(default=False)
+    creation_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+
 
     def buy(self, buyer, amount, price):
         self.amount -= int(amount)

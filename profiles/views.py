@@ -1,3 +1,5 @@
+from django.db.models import query
+from django.http import request
 from django.urls.base import resolve
 from products.models import Product
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -44,14 +46,30 @@ class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class UserHomeDashobardView(LoginRequiredMixin, generic.DetailView):
+class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
     model = User
-    template_name = 'profiles/user_home_dashboard_page.html'
+    template_name = 'profiles/user_dashboard_home_page.html'
 
     def get_object(self):
-        print("User primary key: " + str(self.request.user.pk))
         try:
             obj = User.objects.get(pk=self.request.user.pk)
         except:
             obj = None
         return obj
+
+class UserDashboardProductsView(LoginRequiredMixin, generic.ListView):
+    model = User
+    context_object_name = 'product_list'
+    template_name = 'profiles/user_dashboard_products.html'
+    
+    def get_ordering(self):
+        if self.request.GET.get('ordering'):
+            ordering = str(self.request.GET['ordering'])
+        else:
+            ordering = '-creation_date'
+        return ordering
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(author=self.request.user)
+        queryset = queryset.order_by(self.get_ordering())
+        return queryset
