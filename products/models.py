@@ -16,7 +16,6 @@ class Product(models.Model):
     auction_starting_price = models.DecimalField(decimal_places=2, max_digits=10, blank=True)
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True, related_name='seller_user')
-    buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE,blank=True, null=True, default=None, related_name='buyer_user')
  
     publicly_listed = models.BooleanField(default=True)
     creation_date = models.DateTimeField(auto_now_add=True)

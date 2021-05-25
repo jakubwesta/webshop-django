@@ -57,16 +57,33 @@ class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
             obj = None
         return obj
 
-class UserDashboardProductsView(LoginRequiredMixin, generic.ListView):
+class UserDashboardSellingProductsView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'product_list'
-    template_name = 'profiles/user_dashboard_products.html'
+    template_name = 'profiles/user_dashboard_selling_products_page.html'
     
     def get_ordering(self):
         if self.request.GET.get('ordering'):
             ordering = str(self.request.GET['ordering'])
         else:
             ordering = '-creation_date'
+        return ordering
+
+    def get_queryset(self):
+        queryset = Product.objects.filter(seller=self.request.user)
+        queryset = queryset.order_by(self.get_ordering())
+        return queryset
+
+class UserDashboardBoughtProductsView(LoginRequiredMixin, generic.ListView):
+    model = User
+    context_object_name = 'product_list'
+    template_name = 'profiles/user_dashboard_bought_products_page.html'
+    
+    def get_ordering(self):
+        if self.request.GET.get('ordering'):
+            ordering = str(self.request.GET['ordering'])
+        else:
+            ordering = '-buy_date'
         return ordering
 
     def get_queryset(self):

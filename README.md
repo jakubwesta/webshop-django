@@ -1,10 +1,11 @@
 # **Webshop**
 
-* [Genral info](#general-info)
-  * [Build with]()
-  * [Installation]()
-* [Usage]()
-  * [Login]()
+- [**Webshop**](#webshop)
+  - [**General info**](#general-info)
+    - [**Buit with**](#buit-with)
+    - [**Installation**](#installation)
+  - [**Usage**](#usage)
+    - [**Important commands**](#important-commands)
 
 
 ## **General info**
@@ -47,7 +48,7 @@ I also used *MySql* database and *SCSS* preprocessor. For the virtual environmen
 <summary>Using docker</summary>
 
 1. Clone repository - `git clone https://github.com/makubas/webshop-django`
-2. Enter project directory - `cd webshop-django `
+2. Enter project directory - `cd webshop-django`
 3. Open the settings.py file under `/webshop` and change `DATABASES/default/host from 'localhost' to 'db'`
 4. Build docker services - `docker-compose build`
 5. Create database - `docker-compose up -d db`
@@ -60,4 +61,11 @@ I also used *MySql* database and *SCSS* preprocessor. For the virtual environmen
 ## **Usage**
 If you made everything correctly you should see the message that the server is running and you can connect on `localhost:8000`.
 
+After you are see that server is working, register your new account and check out how this works!
+
+If you want to make multiple things at once, run those commands:
+
+### **Important commands**
+* `py manage.py createuser <amount>` -> Create user(s), it'll return each user email and password.
+* `py manage.py createproduct <amount>` -> This will create user (seller) of the product(s), and than create given amount of random items.
 
