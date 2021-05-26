@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div>
+    {% if user.username %}
+        <p>Username:   {{ user.username }}</p>
+        <p>Email:   {{ user.email }} </p>
+        <p>Name:   {{ user.first_name }}</p>
+    {% else %}
+        <p>User not found!</p>
+    {% endif %}
+</div>
+{% endblock body %}

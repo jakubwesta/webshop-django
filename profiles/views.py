@@ -21,7 +21,7 @@ class UserRegistrationView(generic.CreateView):
     template_name = 'profiles/user_registration_page.html'
 
     def get_success_url(self):
-        return resolve_url('/user')
+        return resolve_url('/user-me')
 
 class UserLoginView(views.LoginView):
     model = User
@@ -29,11 +29,19 @@ class UserLoginView(views.LoginView):
     template_name = 'profiles/user_login_page.html'
 
     def get_success_url(self):
-        return resolve_url('/user')
+        return resolve_url('/user-me')
 
 class UserLogoutView(LoginRequiredMixin, views.LogoutView):
     model = User
     next_page = settings.LOGOUT_REDIRECT_URL
+
+class UserPublicView(generic.DetailView):
+    model = User
+    template_name = 'profiles/user_public_page.html'
+
+    def get_object(self):
+        obj = get_object_or_404(User, username=self.kwargs['username'])
+        return obj
 
 class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product
@@ -41,7 +49,7 @@ class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = ProductCreationForm
 
     def get_success_url(self):
-        return resolve_url('/user')
+        return resolve_url('/user-me')
 
     def form_valid(self, form):
         form.instance.seller = self.request.user

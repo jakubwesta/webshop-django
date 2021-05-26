@@ -48,10 +48,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 AUTH_USER_MODEL = 'profiles.User'
 
-LOGIN_URL = '/user/login/'
-LOGOUT_URL = '/user/logout/'
-LOGIN_REDIRECT_URL = '/user/'
-LOGOUT_REDIRECT_URL = '/user/login/'
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+LOGIN_REDIRECT_URL = '/user-me/'
+LOGOUT_REDIRECT_URL = '/login/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
