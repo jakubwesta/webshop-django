@@ -1,3 +1,4 @@
+from purchases.models import Purchase
 from django.db.models import query
 from django.http import request
 from django.urls.base import resolve
@@ -76,17 +77,17 @@ class UserDashboardSellingProductsView(LoginRequiredMixin, generic.ListView):
 
 class UserDashboardBoughtProductsView(LoginRequiredMixin, generic.ListView):
     model = User
-    context_object_name = 'product_list'
+    context_object_name = 'purchases_list'
     template_name = 'profiles/user_dashboard_bought_products_page.html'
     
     def get_ordering(self):
         if self.request.GET.get('ordering'):
             ordering = str(self.request.GET['ordering'])
         else:
-            ordering = '-buy_date'
+            ordering = '-purchase_date'
         return ordering
 
     def get_queryset(self):
-        queryset = Product.objects.filter(seller=self.request.user)
+        queryset = Purchase.objects.filter(buyer=self.request.user)
         queryset = queryset.order_by(self.get_ordering())
         return queryset

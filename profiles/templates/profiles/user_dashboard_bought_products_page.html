@@ -5,11 +5,11 @@
 {% block body %}
     <p>Bought items:</p>
     <br>
-    {% if product_list %}
+    {% if purchases_list %}
         <ul>
-            {% for product in product_list %}
+            {% for purchase in purchases_list %}
                 <li>
-                    <a href="{{ product.get_absolute_url }}">{{ product.name }}</a>
+                    <a href="{{ purchase.get_absolute_url }}">{{ purchase.product.name }}</a>
                 </li>
             {% endfor %}
         </ul>

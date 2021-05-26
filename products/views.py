@@ -8,6 +8,9 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 
 from .models import Product
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from purchases.models import Purchase
 
 class ProductDetailsView(generic.DetailView):
     model = Product
@@ -15,7 +18,7 @@ class ProductDetailsView(generic.DetailView):
     
     def get_object(self):
         try:
-            obj = Product.objects.get(pk=self.kwargs['pk'])
+            obj = Product.objects.get(pk=self.kwargs['uuid'])
         except:
             obj = None
         return obj
@@ -27,7 +30,11 @@ class ProductDetailsView(generic.DetailView):
                 obj = self.get_object()
                 obj.amount -= 1
                 obj.save()
-                return redirect('product-details', pk=self.kwargs['pk'])
+                Purchase.objects.create(product=obj,
+                                        buyer=self.request.user,
+                                        amount=1,
+                                        price=obj.buy_now)
+                return redirect('product-details', uuid=self.kwargs['uuid'])
 
 class ProductListView(generic.ListView):
     model = Product

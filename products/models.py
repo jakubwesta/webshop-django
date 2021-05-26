@@ -1,10 +1,14 @@
 from django.db import models
 from django.urls import reverse
+
+import uuid
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from webshop import settings
 
 class Product(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     name = models.CharField(max_length=70, blank=False)
     description = models.CharField(max_length=5000, blank=True)
     amount = models.IntegerField(blank=False, default=1)
@@ -21,6 +25,6 @@ class Product(models.Model):
     update_date = models.DateTimeField(auto_now=True)
 
     def get_absolute_url(self):
-        return reverse("product-details", kwargs={"pk": self.pk})
+        return reverse("product-details", kwargs={"uuid": self.pk})
 
         

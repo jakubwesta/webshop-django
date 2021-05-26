@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <a href="{{ purchase.product.get_absolute_url }}">{{ purchase.product.name }}</a>
+    <p>Buyer: {{ purchase.buyer.username }}</p>
+    <p>Seller: {{ purchase.product.seller.username }}</p>
+    <p>Amount: {{ purchase.amount }}</p>
+    <p>Price: {{ purchase.price }}</p>
+{% endblock body %}

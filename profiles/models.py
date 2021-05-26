@@ -7,6 +7,7 @@ from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.base_user import AbstractBaseUser
 from django.utils.translation import ugettext_lazy as _
 
+import uuid
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from .managers import UserManager
@@ -19,10 +20,14 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
 
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
     email = models.EmailField(_('email address'), unique=True, null=True, blank=False)
     username = models.CharField(_('username'), max_length=40, unique=True, null=True, blank=False)
+
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
+
     date_joined = models.DateTimeField(default=timezone.now)
     staff = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)

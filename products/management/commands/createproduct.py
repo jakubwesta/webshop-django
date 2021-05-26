@@ -30,7 +30,8 @@ class Command(BaseCommand):
         self.user.first_name = str('FirstName_' + str(user_key))
         self.user.last_name = str('LastName_' + str(user_key))
         self.user.save()
-        self.stdout.write(f"Created seller (User) of the products  ->  email: {email} | password: {password}")
+        self.stdout.write(f"Created seller (User) of the products  ->  email: {email} | password: {password} -> ", ending='')
+        self.stdout.write(self.style.SUCCESS("OK"))
 
     def generate_random_product(self):
         product_key = randint(0, 1000000)
@@ -49,8 +50,8 @@ class Command(BaseCommand):
         if kwargs['amount'] and kwargs['amount'] > 1:
             for _ in range(kwargs['amount']):
                 self.generate_random_product()
-            self.stdout.write(f"Succesfully created {kwargs['amount']} products.")
+            self.stdout.write(self.style.SUCCESS(f"Succesfully created {kwargs['amount']} products."))
         else:
             self.generate_random_product()
-            self.stdout.write(f"Succesfully created product.")
+            self.stdout.write(self.style.SUCCESS(f"Succesfully created product."))
 

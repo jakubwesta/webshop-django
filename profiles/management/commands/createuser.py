@@ -26,14 +26,15 @@ class Command(BaseCommand):
         user.first_name = str('FirstName_' + str(user_key))
         user.last_name = str('LastName_' + str(user_key))
         user.save()
-        self.stdout.write(f"Created User  ->  email: {email} | password: {password}")
+        self.stdout.write(f"Created User  ->  email: {email} | password: {password} -> ", ending='')
+        self.stdout.write(self.style.SUCCESS("OK"))
 
     def handle(self, *args, **kwargs):
         if kwargs['amount'] and kwargs['amount'] > 1:
             for _ in range(kwargs['amount']):
                 self.generate_random_user()
-            self.stdout.write(f"Succesfully created {kwargs['amount']} users.")
+            self.stdout.write(self.style.SUCCESS(f"Succesfully created {kwargs['amount']} users."))
         else:
             self.generate_random_user()
-            self.stdout.write(f"Succesfully created user.")
+            self.stdout.write(self.style.SUCCESS(f"Succesfully created user."))
 
