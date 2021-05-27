@@ -9,5 +9,6 @@ urlpatterns = [
     path('user/<str:username>/', views.UserPublicView.as_view(), name='user-public'),
     path('user-me/create-product/', views.UserProductCreateView.as_view(), name='create-product'),
     path('user-me/selling-products/', views.UserDashboardSellingProductsView.as_view(), name='user-dashboard-selling-products'),
+    path('user-me/sold-products/', views.UserDashboardSoldProductsView.as_view(), name='user-dashboard-sold-products'),
     path('user-me/bought-products/', views.UserDashboardBoughtProductsView.as_view(), name='user-dashboard-bought-products')
 ]

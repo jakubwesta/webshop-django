@@ -5,9 +5,9 @@
 {% block body %}
     <p>Your products:</p>
     <br>
-    {% if product_list %}
+    {% if selling_list %}
         <ul>
-            {% for product in product_list %}
+            {% for product in selling_list %}
                 <li>
                     <a href="{{ product.get_absolute_url }}">{{ product.name }}</a> {{ product.buy_now }}
                 </li>

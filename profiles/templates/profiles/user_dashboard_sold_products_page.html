@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+    <p>Your sold products:</p>
+    <br>
+    {% if sold_list %}
+        <ul>
+            {% for purchase in sold_list %}
+                <li>
+                    <a href="{{ purchase.get_absolute_url }}">{{ purchase.product.name }}</a> {{ purchase.price }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You did not sell anything!!!</p>
+    {% endif %}
+{% endblock body %}
