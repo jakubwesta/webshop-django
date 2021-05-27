@@ -60,10 +60,7 @@ class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
     template_name = 'profiles/user_dashboard_home_page.html'
 
     def get_object(self):
-        try:
-            obj = User.objects.get(pk=self.request.user.pk)
-        except:
-            obj = None
+        obj = get_object_or_404(User, pk=self.request.user.pk)
         return obj
 
 class UserDashboardSellingProductsView(LoginRequiredMixin, generic.ListView):
