@@ -1,11 +1,6 @@
 {% extends 'base.html' %}
 
 {% load static %}
-{% load crispy_forms_tags %}
-
-{% block head %}
-<link rel="stylesheet" type="text/css" href="{% static 'products/css/product_page/product_page_style.css' %}"> 
-{% endblock head %}  
 
 {% block body %}
     <p>Name: {{ product.name }}</p>
@@ -14,9 +9,10 @@
     <p>Seller: {{ product.seller.username }}</p>
     <p>Amount: {{ product.amount }}</p>
     <div>
-        <form method="post" name="buy_now_form">
+        <form method="post">
             {% csrf_token %}
-            <input type="submit" name="buy_now" value="buy_now"></button>
+            {{ buynow_form }}
+            <input type="submit" name="buynow" value="Buy now"/>
         </form>
     </div>
 {% endblock body %}
