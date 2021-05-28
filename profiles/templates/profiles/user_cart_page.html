@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <p>Products in cart:</p>
+    <br>
+    {% if cart_list %}
+        <ul>
+            {% for item in cart_list %}
+                <li>
+                    <a href="{{ item.product.get_absolute_url }}">{{ item.product.name }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Your cart is empty!</p>
+    {% endif %}
+{% endblock body %}

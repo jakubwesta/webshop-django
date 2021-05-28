@@ -40,8 +40,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     # Dashboard data
 
     money_spent = models.DecimalField(decimal_places=2, max_digits=9, default = 0.00)
-    bought_products = models.ManyToManyField(Product, through=Purchase)
-    cart_products = models.ManyToManyField(Product, through=Cart)
+    bought_products = models.ManyToManyField(Product, through=Purchase, related_name='bought_user')
+    cart_products = models.ManyToManyField(Product, through=Cart, related_name='cart_user')
 
 
 

@@ -4,8 +4,7 @@
 
 {% block body %}
     <p>Name: {{ product.name }}</p>
-    <p>Buy now: {{ product.buy_now }}</p>
-    <p>Starting bid: {{ product.auction_starting_price }}</p>
+    <p>Buy now: {{ product.price }}</p>
     <p>Seller: {{ product.seller.username }}</p>
     <p>Amount: {{ product.amount }}</p>
     <div>
@@ -13,6 +12,7 @@
             {% csrf_token %}
             {{ buynow_form }}
             <input type="submit" name="buynow" value="Buy now"/>
+            <input type="submit" name="addtocart" value="Add to cart"/>
         </form>
     </div>
 {% endblock body %}

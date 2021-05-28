@@ -41,8 +41,7 @@ class Command(BaseCommand):
                                amount=int(product_key),
                                product_model=str('Model_' + str(product_key)),
                                manufacturer=str('Manufacturer_' + str(product_key)),
-                               buy_now=float(price),
-                               auction_starting_price=float(price - 0.01),
+                               price=float(price),
                                seller=self.user)
 
     def handle(self, *args, **kwargs):

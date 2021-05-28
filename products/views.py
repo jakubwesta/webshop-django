@@ -11,7 +11,7 @@ from django.shortcuts import get_object_or_404
 from .models import Product
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from purchases.models import Purchase
+from purchases.models import Purchase, Cart
 
 class ProductDetailsView(generic.DetailView):
     model = Product
@@ -46,8 +46,19 @@ class ProductDetailsView(generic.DetailView):
                 Purchase.objects.create(product=obj,
                                         buyer=self.request.user,
                                         amount=int(buynow_form.clean_amount()),
-                                        price=obj.buy_now)
+                                        price=obj.price)
                 return redirect('product-details', uuid=self.kwargs['uuid'])
+        if 'addtocart' in request.POST:
+            if self.request.user not in self.user.objects.all():
+                raise Http404('To add product to cart you need to be logged in!')
+            buynow_form = BuynowForm(request.POST, amount=obj.amount)
+            if buynow_form.is_valid():
+                Cart.objects.create(product=obj,
+                                    user=self.request.user,
+                                    amount=int(buynow_form.clean_amount()),
+                                    price=obj.price)
+                return redirect('product-details', uuid=self.kwargs['uuid'])
+            
         
 
 class ProductListView(generic.ListView):

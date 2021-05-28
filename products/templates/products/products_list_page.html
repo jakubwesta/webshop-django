@@ -10,7 +10,7 @@
             {% for product in product_list %}
                 {% if product.publicly_listed %}
                     <li>
-                        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a> {{ product.buy_now }}
+                        <a href="{{ product.get_absolute_url }}">{{ product.name }}</a> {{ product.price }}
                     </li>
                 {% endif %}
             {% endfor %}

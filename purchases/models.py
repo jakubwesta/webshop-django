@@ -38,7 +38,7 @@ class Purchase(models.Model):
 
     # Displayed for both purchase sides
 
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='purchase_product')
     buyer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     purchase_date = models.DateTimeField(default=timezone.now)
@@ -56,7 +56,7 @@ class Purchase(models.Model):
 class Cart(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_product')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     addition_date = models.DateTimeField(default=timezone.now)
@@ -65,7 +65,7 @@ class Cart(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
     
     def get_absolute_url(self):
-        return reverse("cart", kwargs={"uuid": self.pk})
+        return reverse("user-cart")
 
     def get_full_price(self):
         return self.amount * self.product.price

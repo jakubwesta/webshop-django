@@ -37,7 +37,7 @@ class UserLoginForm(AuthenticationForm):
 class ProductCreationForm(forms.ModelForm):
     class Meta:
         model = Product
-        fields = ('name', 'description', 'buy_now', 'auction_starting_price',
+        fields = ('name', 'description', 'price',
                 'amount', 'manufacturer', 'product_model')
 
     def __init__(self, *args, **kwargs):
