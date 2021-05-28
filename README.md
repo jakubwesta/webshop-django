@@ -22,36 +22,32 @@
 ![Generic badge](https://img.shields.io/badge/Django-3.2.1-blue.svg)
 ![Generic badge](https://img.shields.io/badge/License-MIT-green.svg)
 
-This project is an example of a webshop made with django with connection to MySql database. Shop have implemented systems of:
+The project is basically a repository that I send someone if he asks me what I did as a programmer or what I can do. 
 
-* Users system
-* Creating products
-* Buy and sell dashboard
-* Searching
-* Cart & checkout
-* Product and user rating
-* And few more...
+It is a cool webshop made with [Technologies](#technologies). I was mostly focusing on Django parts, but of course every website should look cool so I also added (and learned) React.
 
 ### **Technologies**
-* Django Framework
+* Django (python) Framework
 * MySql Database
-* HTML5, CSS & SCSS, Javascript
+* HTML, CSS & SCSS, Javascript
 * Boostrap
-* React
+* React (javascript)
 
 ### **Installation**
 
-<details>
-<summary>Using pipenv</summary>
+<summary>Using pipenv: </summary>
+
 
 1. Clone repository - `git clone https://github.com/makubas/webshop-django`
 2. Enter project directory - `cd webshop-django `
-3. Create virtual environment - `pipenv install -r requirements.txt`
-4. Run it - `pipenv shell`
-5. Create databases for the project - `python manage.py migrate`
-6. Run server - `python manage.py runserver`
+3. In `webshop/settings.py` change `DATABASES { 'default': { 'USER' and 'PASSWORD' } }` to your MySql root user and password, defaults are `USER: root and PASSWORD: root`
+4. Create new MySql database - `CREATE DATABASE webshopdb;` in your mysql command line client
+5. Create virtual environment in project directory (with manage.py) - `pipenv install -r requirements.txt`
+6. Run it - `pipenv shell`
+7. Create databases for the project - `py manage.py migrate` and `py manage.py makemigrations`
+8. Run server - `python manage.py runserver`
 
-</details>
+
 <details>
 <summary>Using docker</summary>
 
@@ -66,43 +62,44 @@ This project is an example of a webshop made with django with connection to MySq
 
 ---
 
-## **Usage**
-If you made everything correctly you should see the message that the server is running and you can connect on `localhost:8000`.
+## **Website structure**
 
-After you are see that server is working, register your new account and check out how this works!
-
-If you want to make multiple things at once, run those commands:
-
-### **How can you quickly test it out**
-
-### **Important  `py manage.py` commands**
+### **New  `py manage.py` commands**
 * `py manage.py createuser <amount>` -> Create user(s), it'll return each user email and password.
 * `py manage.py createproduct <amount>` -> This will create user (seller) of the product(s), and than create given amount of random items.
 
 ### **User roles**
-* <span class="guest">**Guest**</span>: Someone who is on the website without being logged in.
-* <span class="user">**User**</span>: Normal user logged in.
-* <span class="cert-user">**Certified User**</span>: User can advance to certified by having at least 100 sold products and at least 4 stars rating.
-* <span class="admin">**Admin**</span>: User made with `py manage.py createsuperuser`, able to modify everything in database.
+* **Guest**: Someone who is on the website without being logged in.
+* **User**: Normal user logged in.
+* **Certified User**: User can advance to certified by having at least 100 sold products and at least 4 stars rating.
+* **Admin**: User made with `py manage.py createsuperuser`, able to modify everything in database.
 
-## **Website structure**
+### **Subpages**
+Full list of subpages on website with role required to acces it. All of that are registered in `app_names/urls.py`. If you are wondering what the `<uuid>` is - [UUID](https://en.wikipedia.org/wiki/Universally_unique_identifier)
 
-Full list of subpages on website with role required to acces it:
+* `/` - **User** - Home page with listed products
+* `/register` - **Guest** - Registration for new accounts
+* `/login` - **Guest** - Log in to existing account
+* `/logout` - **User** - Log out from account
+* `/admin` - **Admin** - Admin panel
+* `/user-me/` - **User** - Logged user general informations
+  * `/user-me/create-product/` - **User** - New item creation page
+  * `/user-me/selling-products/` - **User** - Products that user is currently selling
+  * `/user-me/sold-products/ - **User** - List of sold products
+  * `/user-me/bought-products/` - **User** - List of all bought items
+  * `/user-me/cart/` - **User** - Cart with products
+* `/user/<username>` - **Guest** - Public user page
+* `/product/<uuid>/` - **Guest** - Specific product page
+  * `/product/<uuid>/update/` - **User** - Form for editing product informations 
+* `/purchase/<uuid>` - **User** - Displays informations about purchase
 
-* `/` <span class="user">**User**</span> Home page with listed products
-* `/register` <span class="guest">**Guest**</span> Registration for new accounts
-* `/login` <span class="guest">**Guest**</span> Log in to existing account
-* `/logout` <span class="user">**User**</span> Log out from account
-* `/admin` <span class="admin">**Admin**</span> Admin panel
-* `/user-me/` <span class="user">**User**</span> Logged user general informations
-  * `/user-me/create-product/` <span class="user">**User**</span> New item creation page
-  * `/user-me/selling-products/` <span class="user">**User**</span> Products that user is currently selling
-  * `/user-me/sold-products/` <span class="user">**User**</span> List of sold products
-  * `/user-me/bought-products/` <span class="user">**User**</span> List of all bought items
-  * `/user-me/cart/` <span class="user">**User**</span> Cart with products
-* `/user/<username>` <span class="guest">**Guest**</span> Public user page
-* `/product/<uuid>/` <span class="guest">**Guest**</span> Specific product page
-  * `/product/<uuid>/update/` <span class="user">**User**</span> Form for editing product informations 
-* `/purchase/<uuid>` <span class="user">**User**</span> Displays informations about purchase
+### **Apps**
+* Profiles - handling user related things. User model, `/user-me` views and authentication.
+* Products - responsible for showing, searching, editing products and other related things.
+* Purchases - Contains data about made purchases, carts and payments.
 
+## **Usage**
+If you made everything correctly you should see the message that the server is running and you can connect on `localhost:8000`.
+
+After you see that server is working, register your new account and check out how this works!
 
