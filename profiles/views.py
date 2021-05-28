@@ -1,4 +1,3 @@
-from purchases.models import Purchase
 from django.db.models import query
 from django.http import request
 from django.urls.base import resolve
@@ -9,6 +8,7 @@ from django.views import generic
 from django.contrib.auth import views
 
 from .models import User
+from purchases.models import Purchase, Cart
 from .forms import *
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -111,5 +111,22 @@ class UserDashboardBoughtProductsView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         queryset = Purchase.objects.filter(buyer=self.request.user)
+        queryset = queryset.order_by(self.get_ordering())
+        return queryset
+
+class UserCartView(LoginRequiredMixin, generic.ListView):
+    model = User
+    context_object_name = 'cart_list'
+    template_name = 'profiles/user_cart_page.html'
+    
+    def get_ordering(self):
+        if self.request.GET.get('ordering'):
+            ordering = str(self.request.GET['ordering'])
+        else:
+            ordering = '-addition_date'
+        return ordering
+
+    def get_queryset(self):
+        queryset = Cart.objects.filter(user=self.request.user)
         queryset = queryset.order_by(self.get_ordering())
         return queryset

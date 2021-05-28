@@ -12,7 +12,7 @@ import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from .managers import UserManager
 from products.models import Product
-from purchases.models import Purchase
+from purchases.models import Purchase, Cart
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -41,6 +41,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     money_spent = models.DecimalField(decimal_places=2, max_digits=9, default = 0.00)
     bought_products = models.ManyToManyField(Product, through=Purchase)
+    cart_products = models.ManyToManyField(Product, through=Cart)
 
 
 

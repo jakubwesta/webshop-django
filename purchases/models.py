@@ -46,16 +46,28 @@ class Purchase(models.Model):
     amount = models.IntegerField(default=1, blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
 
-    #shipping_details = models.ForeignKey(Shipping, on_delete=CASCADE)
-
-
-    # Hidden
-
-    #payment_details = models.ForeignKey(Payment, on_delete=CASCADE)
-
-
     def get_absolute_url(self):
         return reverse("purchase-details", kwargs={"uuid": self.pk})
 
     def get_full_price(self):
-        return self.amount * self.price
+        return self.amount * self.product.price
+
+
+class Cart(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    addition_date = models.DateTimeField(default=timezone.now)
+
+    amount = models.IntegerField(default=1, blank=False)
+    price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
+    
+    def get_absolute_url(self):
+        return reverse("cart", kwargs={"uuid": self.pk})
+
+    def get_full_price(self):
+        return self.amount * self.product.price
+
+    
