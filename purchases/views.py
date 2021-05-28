@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from django.shortcuts import get_object_or_404, render
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -12,5 +13,8 @@ class PurchaseDetailsView(LoginRequiredMixin, generic.DetailView):
 
     def get_object(self):
         obj = get_object_or_404(Purchase, pk=self.kwargs['uuid'])
-        return obj
+        if self.request.user in obj.get_accessible_for_list():
+            return obj
+        else:
+            raise Http404('You are not buyer/seller of the product!')
         

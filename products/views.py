@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import Http404, HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from products.forms import BuynowForm
@@ -9,8 +10,10 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from .models import Product
+from .forms import ProductUpdateForm
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from profiles.models import User
 from purchases.models import Purchase, Cart
 
 class ProductDetailsView(generic.DetailView):
@@ -30,6 +33,9 @@ class ProductDetailsView(generic.DetailView):
         obj = self.get_object()
         if 'buynow_form' not in context:
             context['buynow_form'] = BuynowForm(amount=obj.amount)
+        context['owner'] = False   
+        if obj.seller == self.request.user:
+            context['owner'] = True
         return context
 
     def post(self, request, *args, **kwargs):
@@ -48,6 +54,7 @@ class ProductDetailsView(generic.DetailView):
                                         amount=int(buynow_form.clean_amount()),
                                         price=obj.price)
                 return redirect('product-details', uuid=self.kwargs['uuid'])
+
         if 'addtocart' in request.POST:
             if self.request.user not in self.user.objects.all():
                 raise Http404('To add product to cart you need to be logged in!')
@@ -59,7 +66,6 @@ class ProductDetailsView(generic.DetailView):
                                     price=obj.price)
                 return redirect('product-details', uuid=self.kwargs['uuid'])
             
-        
 
 class ProductListView(generic.ListView):
     model = Product
@@ -77,3 +83,25 @@ class ProductListView(generic.ListView):
         queryset = Product.objects.all()
         queryset = queryset.order_by(self.get_ordering())
         return queryset
+
+
+class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = User
+    form_class = ProductUpdateForm
+    template_name = 'products/product_edit_page.html'
+
+    def get_object(self):
+        obj = get_object_or_404(Product, pk=self.kwargs['uuid'])
+        if self.request.user == obj.seller:
+            return obj
+        else:
+            raise Http404('You are not seller of the product!')
+    
+    def get_context_data(self, **kwargs):
+        context = super(ProductUpdateView, self).get_context_data(**kwargs)
+        obj = self.get_object()
+        context['product'] = obj
+        return context
+
+    def get_success_url(self):
+        return self.get_object().get_absolute_url()

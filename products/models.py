@@ -26,4 +26,7 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse("product-details", kwargs={"uuid": self.pk})
 
+    def get_update_url(self):
+        return reverse("product-update", kwargs={"uuid": self.pk})
+
         

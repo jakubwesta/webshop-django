@@ -46,6 +46,9 @@ class Purchase(models.Model):
     amount = models.IntegerField(default=1, blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
 
+    def get_accessible_for_list(self):
+        return [self.buyer, self.product.seller]
+
     def get_absolute_url(self):
         return reverse("purchase-details", kwargs={"uuid": self.pk})
 

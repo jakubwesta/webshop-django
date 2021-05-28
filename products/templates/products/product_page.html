@@ -14,5 +14,8 @@
             <input type="submit" name="buynow" value="Buy now"/>
             <input type="submit" name="addtocart" value="Add to cart"/>
         </form>
+        {% if owner %}
+            <a href="{{ product.get_update_url }}">Edit Product</a>
+        {% endif %}
     </div>
 {% endblock body %}

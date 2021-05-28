@@ -3,7 +3,7 @@ from django.forms import fields
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from crispy_forms.layout import Submit, HTML
 from django.urls.base import reverse
 from django import forms
 
@@ -33,4 +33,14 @@ class BuynowForm(forms.Form):
         return amount
 
 
-                            
+class ProductUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Product
+        fields = ('price', 'amount', 'description',
+                  'product_model', 'manufacturer', 'publicly_listed')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.add_input(Submit('submit', 'Edit product'))
