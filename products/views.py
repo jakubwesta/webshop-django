@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http.response import Http404, HttpResponseRedirect
+from django.http.response import Http404, HttpResponse, HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from products.forms import BuynowForm
 from django.shortcuts import redirect, render, resolve_url
@@ -11,6 +11,7 @@ from django.shortcuts import get_object_or_404
 
 from .models import Product
 from .forms import ProductUpdateForm
+import uuid
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from profiles.models import User
@@ -45,15 +46,11 @@ class ProductDetailsView(generic.DetailView):
                 raise Http404('To buy a product user need to be logged in!')
             buynow_form = BuynowForm(request.POST, amount=obj.amount)
             if buynow_form.is_valid():
-                obj.amount -= int(buynow_form.clean_amount())
-                if obj.amount == 0:
-                    obj.publicly_listed = False
-                obj.save()
-                Purchase.objects.create(product=obj,
+                purchase = Purchase.objects.create(product=obj,
                                         buyer=self.request.user,
                                         amount=int(buynow_form.clean_amount()),
                                         price=obj.price)
-                return redirect('product-details', uuid=self.kwargs['uuid'])
+                return HttpResponseRedirect(reverse('new-purchase-shipping', kwargs={'uuid': purchase.id, 'product_uuid': self.kwargs['uuid']})) 
 
         if 'addtocart' in request.POST:
             if self.request.user not in self.user.objects.all():
