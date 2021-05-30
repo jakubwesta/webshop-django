@@ -28,6 +28,10 @@ class PurchaseShippingView(LoginRequiredMixin, generic.CreateView):
     template_name = 'purchases/purchase_new_shipping_page.html'
     form_class = PurchaseShippingForm
 
+    def form_valid(self, form):
+        form.instance.id = self.kwargs['uuid']
+        return super().form_valid(form)
+
     def get_success_url(self):
         return reverse("new-purchase-payment", kwargs={"uuid": self.kwargs['uuid'], 'product_uuid': self.kwargs['product_uuid']})
 
@@ -36,6 +40,10 @@ class PurchasePaymentView(LoginRequiredMixin, generic.CreateView):
     model = Shipping
     template_name = 'purchases/purchase_new_payment_page.html'
     form_class = PurchasePaymentForm
+
+    def form_valid(self, form):
+        form.instance.id = self.kwargs['uuid']
+        return super().form_valid(form)
 
     def get_full_model(self):
         obj = get_object_or_404(Purchase, pk=self.kwargs['uuid'])

@@ -12,9 +12,7 @@ from webshop import settings
 
 
 class Shipping(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, null=True)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
 
     email = models.EmailField()
 
@@ -32,7 +30,7 @@ class Shipping(models.Model):
 
 
 class Payment(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=True)
 
     card_number = models.CharField(max_length=20)
     card_expiry_date = models.DateField()

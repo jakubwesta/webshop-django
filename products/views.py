@@ -50,7 +50,7 @@ class ProductDetailsView(generic.DetailView):
                                         buyer=self.request.user,
                                         amount=int(buynow_form.clean_amount()),
                                         price=obj.price)
-                return HttpResponseRedirect(reverse('new-purchase-shipping', kwargs={'uuid': purchase.id, 'product_uuid': self.kwargs['uuid']})) 
+                return HttpResponseRedirect(reverse('new-purchase-shipping', kwargs={'uuid': purchase.pk, 'product_uuid': self.kwargs['uuid']})) 
 
         if 'addtocart' in request.POST:
             if self.request.user not in self.user.objects.all():
