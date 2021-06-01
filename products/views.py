@@ -10,12 +10,13 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 
 from .models import Product
-from .forms import ProductUpdateForm
+from .forms import CommentCreateForm, ProductUpdateForm
 import uuid
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from profiles.models import User
 from purchases.models import Purchase, Cart
+from comments.models import Comment
 
 class ProductDetailsView(generic.DetailView):
     model = Product
@@ -34,9 +35,12 @@ class ProductDetailsView(generic.DetailView):
         obj = self.get_object()
         if 'buynow_form' not in context:
             context['buynow_form'] = BuynowForm(amount=obj.amount)
+        if 'comment_form' not in context:
+            context['comment_form'] = CommentCreateForm()
         context['owner'] = False   
         if obj.seller == self.request.user:
             context['owner'] = True
+        context['comments'] = self.get_object().comments.all()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -62,6 +66,16 @@ class ProductDetailsView(generic.DetailView):
                                     amount=int(buynow_form.clean_amount()),
                                     price=obj.price)
                 return redirect('product-details', uuid=self.kwargs['uuid'])
+
+        if 'addcomment' in request.POST:
+            if self.request.user not in self.user.objects.all():
+                raise Http404('To add comment you need to be logged in!')
+            comment_form = CommentCreateForm(request.POST)
+            if comment_form.is_valid():
+                self.get_object().comments.create(creator=self.request.user,
+                                                  content=comment_form.cleaned_data.get("content"))
+                return redirect('product-details', uuid=self.kwargs['uuid'])
+        
             
 
 class ProductListView(generic.ListView):

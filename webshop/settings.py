@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'products.apps.ProductsConfig',
     'profiles.apps.ProfilesConfig',
     'purchases.apps.PurchasesConfig',
+    'comments.apps.CommentsConfig',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

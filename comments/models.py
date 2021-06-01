@@ -15,7 +15,7 @@ class Comment(models.Model):
 
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     
-    content = models.CharField(max_length=5000, blank=True)
+    content = models.CharField(max_length=5000, blank=False)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)

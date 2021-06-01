@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block body %}
     <p>Name: {{ product.name }}</p>
@@ -17,5 +18,27 @@
         {% if owner %}
             <a href="{{ product.get_update_url }}">Edit Product</a>
         {% endif %}
+    </div>
+    <div>
+    <p>Create comment:</p>
+        <form method="post">
+            {% csrf_token %}
+            {{comment_form|crispy}}
+            <input type="submit" name="addcomment" value="Post comment"/>
+        </form>
+    </div>
+    <div>
+    {% if comments %}
+        <ul>
+            {% for comment in comments %}
+                <li>
+                    <p>{{ comment.creator.username }}: {{ comment.content }}</p>
+                    <br>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>There are no comments on that product.</p>
+    {% endif %}
     </div>
 {% endblock body %}

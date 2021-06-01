@@ -5,7 +5,7 @@ import uuid
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from webshop import settings
-from comments import models
+from comments.models import Comment
 
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -20,7 +20,7 @@ class Product(models.Model):
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
 
-    comments = models.ManyToManyField(models.Comment, on_delete = models.CASCADE, blank=True, null=True)
+    comments = models.ManyToManyField(Comment, blank=True, null=True)
  
     publicly_listed = models.BooleanField(default=True)
     creation_date = models.DateTimeField(auto_now_add=True)
