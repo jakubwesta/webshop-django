@@ -50,7 +50,7 @@ class ProductUpdateForm(forms.ModelForm):
 class CommentCreateForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('content',)
+        fields = ('content', 'stars',)
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

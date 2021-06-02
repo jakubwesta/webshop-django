@@ -3,7 +3,7 @@ from django.http.response import Http404, HttpResponse, HttpResponseRedirect
 from django.urls.base import reverse_lazy
 from products.forms import BuynowForm
 from django.shortcuts import redirect, render, resolve_url
-from django.http import HttpResponse
+from django.http import HttpResponse, request
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -41,6 +41,11 @@ class ProductDetailsView(generic.DetailView):
         if obj.seller == self.request.user:
             context['owner'] = True
         context['comments'] = self.get_object().comments.all()
+        try:
+            if self.request.user.id in self.get_object().comments.all().filter(creator=self.request.user).values_list('creator')[0]:
+                context['commented'] = True
+        except:
+            context['commented'] = False
         return context
 
     def post(self, request, *args, **kwargs):
@@ -68,13 +73,20 @@ class ProductDetailsView(generic.DetailView):
                 return redirect('product-details', uuid=self.kwargs['uuid'])
 
         if 'addcomment' in request.POST:
+            print("2")
             if self.request.user not in self.user.objects.all():
                 raise Http404('To add comment you need to be logged in!')
             comment_form = CommentCreateForm(request.POST)
             if comment_form.is_valid():
+                print("3")
                 self.get_object().comments.create(creator=self.request.user,
-                                                  content=comment_form.cleaned_data.get("content"))
+                                                  content=comment_form.cleaned_data.get("content"),
+                                                  stars=comment_form.cleaned_data.get("stars"),)
                 return redirect('product-details', uuid=self.kwargs['uuid'])
+        print("1")
+        return redirect('product-details', uuid=self.kwargs['uuid'])
+
+            
         
             
 

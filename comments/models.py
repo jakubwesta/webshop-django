@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models.aggregates import Max
 from django.db.models.deletion import CASCADE
 from django.db.models.fields import EmailField
 from django.utils import timezone
@@ -16,6 +17,14 @@ class Comment(models.Model):
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     
     content = models.CharField(max_length=5000, blank=False)
+    STAR_CHOICES = [
+        (1, '1 Star'),
+        (2, '2 Stars'),
+        (3, '3 Stars'),
+        (4, '4 Stars'),
+        (5, '5 Stars'),
+    ]
+    stars = models.IntegerField(max_length=1, choices=STAR_CHOICES)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
