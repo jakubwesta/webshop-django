@@ -73,21 +73,15 @@ class ProductDetailsView(generic.DetailView):
                 return redirect('product-details', uuid=self.kwargs['uuid'])
 
         if 'addcomment' in request.POST:
-            print("2")
             if self.request.user not in self.user.objects.all():
                 raise Http404('To add comment you need to be logged in!')
             comment_form = CommentCreateForm(request.POST)
             if comment_form.is_valid():
-                print("3")
                 self.get_object().comments.create(creator=self.request.user,
                                                   content=comment_form.cleaned_data.get("content"),
                                                   stars=comment_form.cleaned_data.get("stars"),)
                 return redirect('product-details', uuid=self.kwargs['uuid'])
-        print("1")
         return redirect('product-details', uuid=self.kwargs['uuid'])
-
-            
-        
             
 
 class ProductListView(generic.ListView):

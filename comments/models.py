@@ -24,7 +24,7 @@ class Comment(models.Model):
         (4, '4 Stars'),
         (5, '5 Stars'),
     ]
-    stars = models.IntegerField(max_length=1, choices=STAR_CHOICES)
+    stars = models.IntegerField(choices=STAR_CHOICES)
 
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)

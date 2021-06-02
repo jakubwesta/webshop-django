@@ -8,6 +8,7 @@
     <p>Buy now: {{ product.price }}</p>
     <p>Seller: {{ product.seller.username }}</p>
     <p>Amount: {{ product.amount }}</p>
+    <p>Opinions: {{ product.rating }} ({{ product.rating_votes }} votes)</p>
     <div>
         <form method="post">
             {% csrf_token %}
