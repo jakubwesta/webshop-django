@@ -42,6 +42,10 @@ class UserPublicView(generic.DetailView):
     def get_object(self):
         obj = get_object_or_404(User, username=self.kwargs['username'])
         return obj
+    
+    def get_context_data(self, **kwargs):
+        context = super(UserPublicView, self).get_context_data(**kwargs)
+        return context
 
 class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product

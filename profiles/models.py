@@ -1,4 +1,5 @@
 from abc import abstractclassmethod
+from decimal import Decimal
 from functools import total_ordering
 from django.db import models
 from django.core.mail import send_mail
@@ -36,6 +37,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
 
+    rating = models.DecimalField(blank=True, null=True, default=None, decimal_places=1)
+
 
     # Dashboard data
 
@@ -47,7 +50,22 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return str(self.username)
-    
+
+    @property
+    def rating(self):
+        try:
+            rating = 0
+            iteration = 0
+            print('test')
+            for product in Product.objects.all().filter(seller=self):
+                print('test2')
+                rating += product.rating
+                iteration += 1
+            rating = Decimal(rating / iteration)
+            return round(rating, 1)
+        except:
+            return round(Decimal(0 / 1), 1)
+
     @property
     def is_staff(self):
         return self.staff

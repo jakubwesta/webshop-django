@@ -1,9 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http.response import Http404, HttpResponse, HttpResponseRedirect
-from django.urls.base import reverse_lazy
+from django.http.response import Http404, HttpResponseRedirect
 from products.forms import BuynowForm
-from django.shortcuts import redirect, render, resolve_url
-from django.http import HttpResponse, request
+from django.shortcuts import redirect
 from django.views import generic
 from django.urls import reverse
 from django.contrib.auth import get_user_model
@@ -11,12 +9,10 @@ from django.shortcuts import get_object_or_404
 
 from .models import Product
 from .forms import CommentCreateForm, ProductUpdateForm
-import uuid
 import os, sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from profiles.models import User
 from purchases.models import Purchase, Cart
-from comments.models import Comment
 
 class ProductDetailsView(generic.DetailView):
     model = Product

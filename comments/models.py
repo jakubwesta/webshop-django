@@ -1,9 +1,4 @@
 from django.db import models
-from django.db.models.aggregates import Max
-from django.db.models.deletion import CASCADE
-from django.db.models.fields import EmailField
-from django.utils import timezone
-from django.urls import reverse
 
 import uuid
 import os, sys

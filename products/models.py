@@ -1,4 +1,3 @@
-import decimal
 from django.db import models
 from django.urls import reverse
 
@@ -20,7 +19,7 @@ class Product(models.Model):
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    comments = models.ManyToManyField(Comment, blank=True, null=True)
+    comments = models.ManyToManyField(Comment, blank=True)
     rating = models.DecimalField(blank=True, null=True, default=None, decimal_places=1)
     rating_votes = models.IntegerField(blank=True, null=True, default=0)
  
@@ -30,13 +29,16 @@ class Product(models.Model):
 
     @property
     def rating(self):
-        rating = 0
-        iteration = 0
-        for comment in self.comments.all():
-            rating += int(comment.stars)
-            iteration += 1
-        rating = Decimal(rating / iteration)
-        return round(rating, 1)
+        try:
+            rating = 0
+            iteration = 0
+            for comment in self.comments.all():
+                rating += int(comment.stars)
+                iteration += 1
+            rating = Decimal(rating / iteration)
+            return round(rating, 1)
+        except:
+            return round(Decimal(0 / 1), 1)
 
     @property
     def rating_votes(self):
