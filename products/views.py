@@ -91,10 +91,18 @@ class ProductListView(generic.ListView):
         else:
             ordering = '-creation_date'
         return ordering
+
+    def get_searching(self):
+        if self.request.GET.get('searching'):
+            searching = str(self.request.GET['ordering'])
+        else:
+            searching = ''
+        return searching
     
     def get_queryset(self):
         queryset = Product.objects.all()
         queryset = queryset.order_by(self.get_ordering())
+        queryset.filter(name=self.get_searching())
         return queryset
 
 

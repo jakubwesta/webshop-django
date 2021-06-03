@@ -38,7 +38,7 @@ class ProductUpdateForm(forms.ModelForm):
     class Meta:
         model = Product
         fields = ('price', 'amount', 'description',
-                  'product_model', 'manufacturer', 'publicly_listed')
+                  'product_model', 'manufacturer', 'publicly_listed', 'category')
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

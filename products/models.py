@@ -11,6 +11,22 @@ from comments.models import Comment
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
+    CATEGORY_CHOICES = [
+        ('Electronics', 'Electronics'),
+        ('Books', 'Books'),
+        ('Arts', 'Arts'),
+        ('Fashion', 'Fashion'),
+        ('Services', 'Services'),
+        ('Home', 'Home'),
+        ('Industrial', 'Industrial'),
+        ('Health', 'Health'),
+        ('Kids', 'Kids'),
+        ('Garden', 'Garden'),
+        ('Sport', 'Sport'),
+        ('Motorization', 'Motorization'),
+        ('Immovables', 'Immovables'),
+    ]
+
     name = models.CharField(max_length=70, blank=False)
     description = models.CharField(max_length=5000, blank=True)
     amount = models.IntegerField(blank=False, default=1)
@@ -22,6 +38,7 @@ class Product(models.Model):
     comments = models.ManyToManyField(Comment, blank=True)
     rating = models.DecimalField(blank=True, null=True, default=None, decimal_places=1)
     rating_votes = models.IntegerField(blank=True, null=True, default=0)
+    category = models.CharField(choices=CATEGORY_CHOICES, max_length=20)
  
     publicly_listed = models.BooleanField(default=True)
     creation_date = models.DateTimeField(auto_now_add=True)
