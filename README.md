@@ -24,7 +24,7 @@ It is a cool webshop made with [Technologies](#technologies). I was mostly focus
 * MySql Database
 * HTML, CSS & SCSS, Javascript
 * Boostrap
-* React (javascript)
+* React framework
 
 ### **Installation**
 
