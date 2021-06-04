@@ -3,6 +3,7 @@ from django.http.response import Http404, HttpResponseRedirect
 from products.forms import BuynowForm
 from django.shortcuts import redirect
 from django.views import generic
+from django.db.models import Q
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
@@ -93,16 +94,16 @@ class ProductListView(generic.ListView):
         return ordering
 
     def get_searching(self):
-        if self.request.GET.get('searching'):
-            searching = str(self.request.GET['ordering'])
+        if self.request.GET.get('search'):
+            searching = str(self.request.GET['search'])
         else:
             searching = ''
         return searching
     
     def get_queryset(self):
         queryset = Product.objects.all()
+        queryset = queryset.filter(Q(name__icontains=self.get_searching()))
         queryset = queryset.order_by(self.get_ordering())
-        queryset.filter(name=self.get_searching())
         return queryset
 
 
