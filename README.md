@@ -20,7 +20,7 @@ The project is basically a repository that I send someone if he asks me what I d
 It is a cool webshop made with [Technologies](#technologies). I was mostly focusing on Django parts, but of course every website should look cool so I also added (and learned) React.
 
 ### **Technologies**
-* Django (python) Framework
+* Django framework
 * MySql Database
 * HTML, CSS & SCSS, Javascript
 * Boostrap
