@@ -1,12 +1,5 @@
 # **Webshop**
 
-<style>
-.guest {color:#6e6e6e; font-family: Comic Sans MS; padding: 7px;}
-.user {color:#179637; font-family: Comic Sans MS; padding: 7px;}
-.cert-user {color:#199c95; font-family: Comic Sans MS; padding: 7px;}
-.admin {color:#b01a2e; font-family: Comic Sans MS; padding: 7px;}
-</style>
-
 ## **Content**
 - [**General info**](#general-info)
   - [**Technologies**](#technologies)
