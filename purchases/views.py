@@ -1,14 +1,11 @@
-from django.http import request
-from django.http.response import Http404
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponse
-from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django import views
+from django.http.response import Http404
+from django.shortcuts import get_object_or_404
 from django.urls import reverse
+from django.views import generic
 
-from .models import Payment, Purchase, Shipping
 from .forms import PurchasePaymentForm, PurchaseShippingForm
+from .models import Payment, Purchase, Shipping
 
 
 class PurchaseDetailsView(LoginRequiredMixin, generic.DetailView):
