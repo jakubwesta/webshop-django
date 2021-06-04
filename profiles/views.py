@@ -1,17 +1,11 @@
-from django.db.models import query
-from django.http import request
-from django.urls.base import resolve
-from products.models import Product
+from django.contrib.auth import views
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import get_object_or_404, resolve_url
 from django.views import generic
-from django.contrib.auth import views
 
-from .models import User
 from purchases.models import Purchase, Cart
 from .forms import *
-import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from webshop import settings
 
 
@@ -23,6 +17,7 @@ class UserRegistrationView(generic.CreateView):
     def get_success_url(self):
         return resolve_url('/user-me')
 
+
 class UserLoginView(views.LoginView):
     model = User
     form_class = UserLoginForm
@@ -31,9 +26,11 @@ class UserLoginView(views.LoginView):
     def get_success_url(self):
         return resolve_url('/user-me')
 
+
 class UserLogoutView(LoginRequiredMixin, views.LogoutView):
     model = User
     next_page = settings.LOGOUT_REDIRECT_URL
+
 
 class UserPublicView(generic.DetailView):
     model = User
@@ -42,10 +39,11 @@ class UserPublicView(generic.DetailView):
     def get_object(self):
         obj = get_object_or_404(User, username=self.kwargs['username'])
         return obj
-    
+
     def get_context_data(self, **kwargs):
         context = super(UserPublicView, self).get_context_data(**kwargs)
         return context
+
 
 class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
     model = Product
@@ -59,6 +57,7 @@ class UserProductCreateView(LoginRequiredMixin, generic.CreateView):
         form.instance.seller = self.request.user
         return super().form_valid(form)
 
+
 class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
     model = User
     template_name = 'profiles/user_dashboard_home_page.html'
@@ -67,11 +66,12 @@ class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
         obj = get_object_or_404(User, pk=self.request.user.pk)
         return obj
 
+
 class UserDashboardSellingProductsView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'selling_list'
     template_name = 'profiles/user_dashboard_selling_products_page.html'
-    
+
     def get_ordering(self):
         if self.request.GET.get('ordering'):
             ordering = str(self.request.GET['ordering'])
@@ -84,11 +84,12 @@ class UserDashboardSellingProductsView(LoginRequiredMixin, generic.ListView):
         queryset = queryset.order_by(self.get_ordering())
         return queryset
 
+
 class UserDashboardSoldProductsView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'sold_list'
     template_name = 'profiles/user_dashboard_sold_products_page.html'
-    
+
     def get_ordering(self):
         if self.request.GET.get('ordering'):
             ordering = str(self.request.GET['ordering'])
@@ -101,11 +102,12 @@ class UserDashboardSoldProductsView(LoginRequiredMixin, generic.ListView):
         queryset = queryset.order_by(self.get_ordering())
         return queryset
 
+
 class UserDashboardBoughtProductsView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'purchases_list'
     template_name = 'profiles/user_dashboard_bought_products_page.html'
-    
+
     def get_ordering(self):
         if self.request.GET.get('ordering'):
             ordering = str(self.request.GET['ordering'])
@@ -118,11 +120,12 @@ class UserDashboardBoughtProductsView(LoginRequiredMixin, generic.ListView):
         queryset = queryset.order_by(self.get_ordering())
         return queryset
 
+
 class UserCartView(LoginRequiredMixin, generic.ListView):
     model = User
     context_object_name = 'cart_list'
     template_name = 'profiles/user_cart_page.html'
-    
+
     def get_ordering(self):
         if self.request.GET.get('ordering'):
             ordering = str(self.request.GET['ordering'])
