@@ -36,7 +36,7 @@ class UserPublicView(generic.DetailView):
     model = User
     template_name = 'profiles/user_public_page.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(User, username=self.kwargs['username'])
         return obj
 
@@ -62,7 +62,7 @@ class UserDashobardHomeView(LoginRequiredMixin, generic.DetailView):
     model = User
     template_name = 'profiles/user_dashboard_home_page.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(User, pk=self.request.user.pk)
         return obj
 

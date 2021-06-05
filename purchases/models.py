@@ -1,12 +1,9 @@
-from django.db import models
-from django.db.models.deletion import CASCADE
-from django.db.models.fields import EmailField
-from django.utils import timezone
-from django.urls import reverse
-
 import uuid
-import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+from django.db import models
+from django.urls import reverse
+from django.utils import timezone
+
 from products.models import Product
 from webshop import settings
 
@@ -44,7 +41,6 @@ class Payment(models.Model):
 class Purchase(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-
     # Displayed for both purchase sides
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='purchase_product')
@@ -55,14 +51,12 @@ class Purchase(models.Model):
     amount = models.IntegerField(default=1, blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
 
-
     # Hidden
 
     finished = models.BooleanField(default=False)
-    
+
     shipping = models.ForeignKey(Shipping, on_delete=models.CASCADE, default=None, blank=False, null=True)
     payment = models.ForeignKey(Payment, on_delete=models.CASCADE, default=None, blank=False, null=True)
-
 
     def get_accessible_for_list(self):
         return [self.buyer, self.product.seller]
@@ -76,7 +70,7 @@ class Purchase(models.Model):
 
 class Cart(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    
+
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='cart_product')
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
@@ -84,11 +78,10 @@ class Cart(models.Model):
 
     amount = models.IntegerField(default=1, blank=False)
     price = models.DecimalField(decimal_places=2, max_digits=10, blank=False)
-    
-    def get_absolute_url(self):
+
+    @staticmethod
+    def get_absolute_url():
         return reverse("user-cart")
 
     def get_full_price(self):
         return self.amount * self.product.price
-
-    

@@ -1,8 +1,5 @@
 from django.db import models
 
-import uuid
-import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from webshop import settings
 
 

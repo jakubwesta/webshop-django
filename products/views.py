@@ -1,6 +1,3 @@
-import os
-import sys
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
@@ -16,15 +13,13 @@ from purchases.models import Purchase, Cart
 from .forms import CommentCreateForm, ProductUpdateForm
 from .models import Product
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 
 class ProductDetailsView(generic.DetailView):
     model = Product
     user = get_user_model()
     template_name = 'products/product_page.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         try:
             obj = Product.objects.get(pk=self.kwargs['uuid'])
         except:
@@ -118,7 +113,7 @@ class ProductUpdateView(LoginRequiredMixin, generic.UpdateView):
     form_class = ProductUpdateForm
     template_name = 'products/product_edit_page.html'
 
-    def get_object(self):
+    def get_object(self, **kwargs):
         obj = get_object_or_404(Product, pk=self.kwargs['uuid'])
         if self.request.user == obj.seller:
             return obj

@@ -1,19 +1,15 @@
-from abc import abstractclassmethod
+import uuid
 from decimal import Decimal
-from functools import total_ordering
-from django.db import models
-from django.core.mail import send_mail
-from django.utils import timezone
-from django.contrib.auth.models import PermissionsMixin
+
 from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.models import PermissionsMixin
+from django.db import models
+from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-import uuid
-import os, sys
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from .managers import UserManager
 from products.models import Product
 from purchases.models import Purchase, Cart
+from .managers import UserManager
 
 
 class User(AbstractBaseUser, PermissionsMixin):
@@ -27,9 +23,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     admin = models.BooleanField(default=False)
     staff = models.BooleanField(default=False)
     certified = models.BooleanField(default=False)
-    
 
-    # Publicly avaible data
+    # Publicly available data
 
     email = models.EmailField(unique=True, null=True, blank=False)
     username = models.CharField(max_length=40, unique=True, null=True, blank=False)
@@ -37,16 +32,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(max_length=30, blank=True)
     last_name = models.CharField(max_length=30, blank=True)
 
-    rating = models.DecimalField(blank=True, null=True, default=None, decimal_places=1)
-
-
     # Dashboard data
 
-    money_spent = models.DecimalField(decimal_places=2, max_digits=9, default = 0.00)
+    money_spent = models.DecimalField(decimal_places=2, max_digits=9, default=0.00)
     bought_products = models.ManyToManyField(Product, through=Purchase, related_name='bought_user')
     cart_products = models.ManyToManyField(Product, through=Cart, related_name='cart_user')
-
-
 
     def __str__(self):
         return str(self.username)
@@ -56,9 +46,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         try:
             rating = 0
             iteration = 0
-            print('test')
             for product in Product.objects.all().filter(seller=self):
-                print('test2')
                 rating += product.rating
                 iteration += 1
             rating = Decimal(rating / iteration)
@@ -81,10 +69,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-    
+
     def get_full_name(self):
         return f'{self.first_name} {self.last_name}'
 
     def get_short_name(self):
         return f'{self.first_name}'
-

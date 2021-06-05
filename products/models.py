@@ -1,12 +1,12 @@
+import uuid
+from decimal import *
+
 from django.db import models
 from django.urls import reverse
 
-import uuid
-import os, sys
-from decimal import *
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from webshop import settings
 from comments.models import Comment
+
 
 class Product(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -36,10 +36,8 @@ class Product(models.Model):
 
     seller = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
     comments = models.ManyToManyField(Comment, blank=True)
-    rating = models.DecimalField(blank=True, null=True, default=None, decimal_places=1)
-    rating_votes = models.IntegerField(blank=True, null=True, default=0)
     category = models.CharField(choices=CATEGORY_CHOICES, max_length=20)
- 
+
     publicly_listed = models.BooleanField(default=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
@@ -66,5 +64,3 @@ class Product(models.Model):
 
     def get_update_url(self):
         return reverse("product-update", kwargs={"uuid": self.pk})
-
-        

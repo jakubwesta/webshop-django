@@ -6,8 +6,10 @@ from random import randint
 
 
 def get_random_email(chars):
-    email_temp = str(get_random_string(length=int(chars), allowed_chars='abcdefghijklmnoprstuowjxyz1234567890') + '@gmail.com')
+    email_temp = str(
+        get_random_string(length=int(chars), allowed_chars='abcdefghijklmnoprstuowjxyz1234567890') + '@gmail.com')
     return email_temp
+
 
 class Command(BaseCommand):
     help = 'Create random user(s)'
@@ -33,8 +35,7 @@ class Command(BaseCommand):
         if kwargs['amount'] and kwargs['amount'] > 1:
             for _ in range(kwargs['amount']):
                 self.generate_random_user()
-            self.stdout.write(self.style.SUCCESS(f"Succesfully created {kwargs['amount']} users."))
+            self.stdout.write(self.style.SUCCESS(f"Successfully created {kwargs['amount']} users."))
         else:
             self.generate_random_user()
-            self.stdout.write(self.style.SUCCESS(f"Succesfully created user."))
-
+            self.stdout.write(self.style.SUCCESS(f"Successfully created user."))
