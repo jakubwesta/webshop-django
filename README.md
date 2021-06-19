@@ -2,6 +2,7 @@
 
 ## **Content**
 - [**General info**](#general-info)
+  - [**Screenshots**](#screenshots)
   - [**Technologies**](#technologies)
   - [**Installation**](#installation)
 - [**Website structure**](#website-structure)
@@ -15,15 +16,26 @@
 ![Generic badge](https://img.shields.io/badge/Django-3.2.1-blue.svg)
 ![Generic badge](https://img.shields.io/badge/License-MIT-green.svg)
 
-The project is basically a repository that I send someone if he asks me what I did as a programmer or what I can do. 
 
-It is a cool webshop made with [Technologies](#technologies).
-I was mostly focusing on Django parts
+It is a cool and simple webshop made with [Technologies](#technologies).
+
+I was mostly focusing on django parts as I was learning it while doing the project. I could make it much prettier, but
+I didn't want to waste time on it. Also, I didn't want to make it too big because adding new features is pretty easy, and
+I don't see much sense in actually adding it.
+
+###Screenshots
+<details>
+  <summary>IF YOU DON'T WANT TO MANUALLY INSTALL IT, HERE ARE SOME SCREENSHOTS OF IT</summary>
+
+  Work in progress currently...
+
+  I will add some screenshots when the site will be prettier...
+</details>
 
 ### **Technologies**
 * Django framework
 * MySql Database
-* HTML, CSS & SCSS, Javascript
+* HTML, CSS
 * Boostrap
 
 ### **Installation**
@@ -73,4 +85,5 @@ Full list of subpages on website. All of that are registered in `app_names/urls.
 If you made everything correctly you should see the message that the server is running, and you can connect on `http://127.0.0.1:8000`.
 
 After you see that server is working, register your new account and check out how this works!
+
 
